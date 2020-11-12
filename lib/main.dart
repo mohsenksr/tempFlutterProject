@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:fancy_bar/fancy_bar.dart';
+import './classes/fancy_bar.dart';
 
 void main() => runApp(MyApp());
 
@@ -52,7 +52,7 @@ class _MyAppState extends State<MyApp> {
             FancyItem(
               textColor: Colors.teal,
               title: 'More',
-              icon: Icon(Icons.more),
+              icon: Icon(Icons.more_vert),
             ),
           ],
           onItemSelected: (index) {
