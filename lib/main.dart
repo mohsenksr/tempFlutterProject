@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import './classes/fancy_bar.dart';
 import './styles/colors.dart';
 import 'components/main/navigationBar.dart';
 import './routes/home.dart';
@@ -10,6 +9,7 @@ import './routes/more.dart';
 import './styles/textStyles.dart';
 
 void main() {
+  print('main called');
   runApp(MaterialApp(
     initialRoute: '/',
     routes: {
@@ -25,7 +25,9 @@ void main() {
 class MyApp extends StatefulWidget {
   int initialIndex;
 
-  MyApp(this.initialIndex);
+  MyApp(this.initialIndex) {
+    print('MyApp called');
+  }
 
   State<StatefulWidget> createState() {
     return _MyAppState(initialIndex);
@@ -41,7 +43,9 @@ class _MyAppState extends State<MyApp> {
     });
   }
 
-  _MyAppState(this._tabIndexState);
+  _MyAppState(this._tabIndexState) {
+    print('MyAppState called');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -55,15 +59,16 @@ class _MyAppState extends State<MyApp> {
             ),
             backgroundColor: themeColor,
           ),
-          body: _tabIndexState == 0
-              ? HomeRoute()
-              : _tabIndexState == 1
-                  ? MessagesRoute()
-                  : _tabIndexState == 2
-                      ? SearchRoute()
-                      : _tabIndexState == 3
-                          ? ProfileRoute()
-                          : MoreRoute(),
+          body: IndexedStack(
+            children: [
+              HomeRoute(),
+              MessagesRoute(),
+              SearchRoute(),
+              ProfileRoute(),
+              MoreRoute(),
+            ],
+            index: _tabIndexState,
+          ),
           bottomNavigationBar: FancyBar(_tabIndexState, _changeTab)),
     );
   }
