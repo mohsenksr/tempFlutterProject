@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import './../styles/textStyles.dart';
 
 enum FancyType { FancyV1, FancyV2 }
 
@@ -10,7 +11,7 @@ class FancyBottomBar extends StatefulWidget {
 
   FancyBottomBar({
     this.items,
-    this.selectedIndex,
+    @required this.selectedIndex,
     @required this.onItemSelected,
     this.type,
   }) {
@@ -20,11 +21,13 @@ class FancyBottomBar extends StatefulWidget {
   }
 
   @override
-  _FancyBottomBarState createState() => _FancyBottomBarState();
+  _FancyBottomBarState createState() => _FancyBottomBarState(selectedIndex);
 }
 
 class _FancyBottomBarState extends State<FancyBottomBar> {
   int pos = 0;
+
+  _FancyBottomBarState(this.pos);
 
   void setItem(int _pos) {
     setState(() {
@@ -91,6 +94,7 @@ class _ItemVWidget extends StatelessWidget {
                   ? Text(
                       '${item.title}',
                       style: TextStyle(
+                          fontFamily: 'Oxygen',
                           color:
                               item.textColor ?? Theme.of(context).primaryColor,
                           // fontWeight: FontWeight.bold,
@@ -132,6 +136,7 @@ class _ItemVWidget extends StatelessWidget {
                     child: Text(
                       '${item.title}',
                       style: TextStyle(
+                          fontFamily: 'Oxygen',
                           color: Colors.white,
                           // fontWeight: FontWeight.bold,
                           fontSize: 12),
@@ -160,6 +165,7 @@ class _ItemVWidget extends StatelessWidget {
                   ? Text(
                       '${item.title}',
                       style: TextStyle(
+                          fontFamily: 'Oxygen',
                           color:
                               item.textColor ?? Theme.of(context).primaryColor,
                           // fontWeight: FontWeight.bold,

@@ -1,68 +1,70 @@
 import 'package:flutter/material.dart';
-import 'package:fancy_bar/fancy_bar.dart';
+import './classes/fancy_bar.dart';
+import './styles/colors.dart';
+import 'components/main/navigationBar.dart';
+import './routes/home.dart';
+import './routes/messages.dart';
+import './routes/search.dart';
+import './routes/profile.dart';
+import './routes/more.dart';
+import './styles/textStyles.dart';
 
-void main() => runApp(MyApp());
+void main() {
+  runApp(MaterialApp(
+    initialRoute: '/',
+    routes: {
+      '/': (context) => MyApp(0),
+      '/messages': (context) => MyApp(1),
+      '/search': (context) => MyApp(2),
+      '/profile': (context) => MyApp(3),
+      '/more': (context) => MyApp(4),
+    },
+  ));
+}
 
 class MyApp extends StatefulWidget {
+  int initialIndex;
+
+  MyApp(this.initialIndex);
+
   State<StatefulWidget> createState() {
-    return _MyAppState();
+    return _MyAppState(initialIndex);
   }
 }
 
 class _MyAppState extends State<MyApp> {
   int _tabIndexState = 0;
 
+  _changeTab(tabIndex) {
+    setState(() {
+      _tabIndexState = tabIndex;
+    });
+  }
+
+  _MyAppState(this._tabIndexState);
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        appBar: AppBar(
-          centerTitle: true,
-          title: Text('Project'),
-          backgroundColor: Colors.teal,
-        ),
-        body: Column(
-          children: [
-            Text('Tab number ' + (_tabIndexState + 1).toString() + ' selected'),
-          ],
-        ),
-        bottomNavigationBar: FancyBottomBar(
-          type: FancyType.FancyV2, // Fancy Bar Type
-          items: [
-            FancyItem(
-              textColor: Colors.teal,
-              title: 'Home',
-              icon: Icon(Icons.home),
+          appBar: AppBar(
+            centerTitle: true,
+            title: Text(
+              'Project',
+              style: normalText,
             ),
-            FancyItem(
-              textColor: Colors.teal,
-              title: 'Messages',
-              icon: Icon(Icons.message),
-            ),
-            FancyItem(
-              textColor: Colors.teal,
-              title: 'Search',
-              icon: Icon(Icons.search),
-            ),
-            FancyItem(
-              textColor: Colors.teal,
-              title: 'Profile',
-              icon: Icon(Icons.person),
-            ),
-            // FancyItem(
-            //   textColor: Colors.teal,
-            //   title: 'More',
-            //   icon: Icon(Icons.more_vert),
-            // ),
-          ],
-          onItemSelected: (index) {
-            print(index);
-            setState(() {
-              _tabIndexState = index;
-            });
-          },
-        ),
-      ),
+            backgroundColor: themeColor,
+          ),
+          body: _tabIndexState == 0
+              ? HomeRoute()
+              : _tabIndexState == 1
+                  ? MessagesRoute()
+                  : _tabIndexState == 2
+                      ? SearchRoute()
+                      : _tabIndexState == 3
+                          ? ProfileRoute()
+                          : MoreRoute(),
+          bottomNavigationBar: FancyBar(_tabIndexState, _changeTab)),
     );
   }
 }
