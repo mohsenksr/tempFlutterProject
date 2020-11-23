@@ -37,11 +37,19 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   int _tabIndexState = 0;
+  int _moreOptionIndex = 0;
 
   _changeTab(tabIndex) {
     setState(() {
       _tabIndexState = tabIndex;
     });
+  }
+
+  void setOptionIndex(index) {
+    setState(() {
+      _moreOptionIndex = index;
+    });
+    print("index is $_moreOptionIndex");
   }
 
   _MyAppState(this._tabIndexState) {
@@ -61,6 +69,19 @@ class _MyAppState extends State<MyApp> {
               style: normalText,
             ),
             backgroundColor: themeColor,
+            actions: [
+              if (_tabIndexState == 4)
+                Row(
+                  children: [
+                    IconButton(
+                        icon: Icon(Icons.arrow_back),
+                        onPressed: () {
+                          setOptionIndex(0);
+                        }),
+                  ],
+                  //FloatingActionButtonLocation(FloatingActionButtonLocation.startFloat)
+                )
+            ],
           ),
           body: Row(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -75,7 +96,7 @@ class _MyAppState extends State<MyApp> {
                     MessagesRoute(),
                     SearchRoute(),
                     ProfileRoute(),
-                    MoreRoute(),
+                    MoreRoute(setOptionIndex, _moreOptionIndex),
                   ],
                   index: _tabIndexState,
                 ),
