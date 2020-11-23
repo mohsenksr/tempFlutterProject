@@ -3,13 +3,13 @@ import './../styles/textStyles.dart';
 
 enum FancyType { FancyV1, FancyV2 }
 
-class FancyBottomBar extends StatefulWidget {
+class FancyLeftBar extends StatefulWidget {
   final List<FancyItem> items;
   final selectedIndex;
   final ValueChanged<int> onItemSelected;
   final FancyType type;
 
-  FancyBottomBar({
+  FancyLeftBar({
     this.items,
     @required this.selectedIndex,
     @required this.onItemSelected,
@@ -24,7 +24,7 @@ class FancyBottomBar extends StatefulWidget {
   _FancyBottomBarState createState() => _FancyBottomBarState(selectedIndex);
 }
 
-class _FancyBottomBarState extends State<FancyBottomBar> {
+class _FancyBottomBarState extends State<FancyLeftBar> {
   int pos = 0;
 
   _FancyBottomBarState(this.pos);
@@ -39,8 +39,8 @@ class _FancyBottomBarState extends State<FancyBottomBar> {
   Widget build(BuildContext context) {
     return Material(
       child: BottomAppBar(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: widget.items.map((_item) {
             FancyItem item = _item;
             var index = widget.items.indexOf(_item);
@@ -79,7 +79,7 @@ class _ItemVWidget extends StatelessWidget {
       case FancyType.FancyV1:
         {
           return Container(
-            width: MediaQuery.of(context).size.width / length,
+            width: 100,
             height: kBottomNavigationBarHeight,
             alignment: Alignment.center,
             child: AnimatedSwitcher(
@@ -108,7 +108,7 @@ class _ItemVWidget extends StatelessWidget {
       case FancyType.FancyV2:
         {
           return Container(
-            width: MediaQuery.of(context).size.width / length,
+            width: 100,
             height: kBottomNavigationBarHeight,
             child: AnimatedContainer(
               height: 0,
@@ -150,7 +150,7 @@ class _ItemVWidget extends StatelessWidget {
       default:
         {
           return Container(
-            width: MediaQuery.of(context).size.width / length,
+            width: 100,
             height: kBottomNavigationBarHeight,
             alignment: Alignment.center,
             child: AnimatedSwitcher(

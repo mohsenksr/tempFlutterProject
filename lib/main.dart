@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import './styles/colors.dart';
 import 'components/main/navigationBar.dart';
+import 'components/main/leftNavigationBar.dart';
 import './routes/home.dart';
 import './routes/messages.dart';
 import './routes/search.dart';
@@ -49,6 +50,8 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+    double _width = MediaQuery.of(context).size.width;
+
     return MaterialApp(
       home: Scaffold(
           appBar: AppBar(
@@ -59,17 +62,29 @@ class _MyAppState extends State<MyApp> {
             ),
             backgroundColor: themeColor,
           ),
-          body: IndexedStack(
+          body: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              HomeRoute(),
-              MessagesRoute(),
-              SearchRoute(),
-              ProfileRoute(),
-              MoreRoute(),
+              _width > 600
+                  ? LeftFancyBar(_tabIndexState, _changeTab)
+                  : SizedBox.shrink(),
+              Expanded(
+                child: IndexedStack(
+                  children: [
+                    HomeRoute(),
+                    MessagesRoute(),
+                    SearchRoute(),
+                    ProfileRoute(),
+                    MoreRoute(),
+                  ],
+                  index: _tabIndexState,
+                ),
+              ),
             ],
-            index: _tabIndexState,
           ),
-          bottomNavigationBar: FancyBar(_tabIndexState, _changeTab)),
+          bottomNavigationBar: _width < 600
+              ? FancyBar(_tabIndexState, _changeTab)
+              : SizedBox.shrink()),
     );
   }
 }
